@@ -65,4 +65,3 @@ int main(void) {
     free(line);  // free the input buffer
     return 0;
 }
-
