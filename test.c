@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -26,7 +25,7 @@ int tokenize(char *input, char *args[]) {
 int main(void) {
     char *line = NULL;
     size_t len = 0;
-    char *args[MAX_ARGS];
+    char *args[MAX_ARGS+1];
     char *env[] = {NULL};
     ssize_t line_len;
     while (true) {
@@ -45,11 +44,16 @@ int main(void) {
 
         int argc = tokenize(line, args);  // tokenize the input
         if (argc > 0) {
+            // build a new argument list with full path to the executable
+            char path[128] = "/usr/bin/";
+            strcat(path, args[0]);
+            args[0] = path;
+
             pid_t pid = fork();
             if (pid == -1) {  // fork failed
                 perror("fork");
             } else if (pid == 0) {  // child process
-                if (execvp(args[0], args) == -1) {  // execute the command
+                if (execve(args[0], args, env) == -1) {  // execute the command
                     perror(args[0]);
                     exit(EXIT_FAILURE);
                 }
@@ -62,7 +66,6 @@ int main(void) {
         }
     }
 
-    free(line);  // free the input buffer
-    return 0;
+
 }
 
