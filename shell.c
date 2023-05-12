@@ -20,6 +20,42 @@ int tokenize(char *input, char *args[])
 	args[i] = NULL;
 	return (i);
 }
+/**
+ * exe - execute command
+ * @args: argement
+ * @env: envirement
+ *
+ * Return: void
+ */
+void exe(char *args[], char *env[])
+{
+	char path[128] = "/usr/bin/";
+	pid_t pid;
+
+	strcat(path, args[0]);
+	args[0] = path;
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		if (execve(args[0], args, env) == -1)
+		{
+			perror(args[0]);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else
+	{
+		int status;
+
+		if (waitpid(pid, &status, 0) == -1)
+			perror("waitpid");
+	}
+}
 
 /**
  * main - main
@@ -31,11 +67,10 @@ int main(void)
 {
 	char *line = NULL;
 	size_t len = 0;
-	char *args[MAX_ARGS+1];
+	char *args[MAX_ARGS + 1];
 	char *env[] = {NULL};
 	ssize_t line_len;
-	int argc, status;
-	pid_t pid;
+	int argc;
 
 	while (true)
 	{
@@ -45,32 +80,12 @@ int main(void)
 			break;
 		if (strcmp(line, "exit\n") == 0)
 			break;
-		if (line[line_len-1] == '\n')
-			line[line_len-1] = '\0';
-
+		if (line[line_len - 1] == '\n')
+			line[line_len - 1] = '\0';
 		argc = tokenize(line, args);
 		if (argc > 0)
 		{
-			char path[128] = "/usr/bin/";
-
-			strcat(path, args[0]);
-			args[0] = path;
-			pid = fork();
-			if (pid == -1)
-				perror("fork");
-			else if (pid == 0)
-			{
-				if (execve(args[0], args, env) == -1)
-				{
-					perror(args[0]);
-					exit(EXIT_FAILURE);
-				}
-			}
-			else
-			{
-				if (waitpid(pid, &status, 0) == -1)
-					perror("waitpid");
-			}
+			exe(args, env);
 		}
 	}
 		free(line);
