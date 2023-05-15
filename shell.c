@@ -1,5 +1,14 @@
 #include "main.h"
 
+void env_blt(void)
+{
+	char **env = environ;
+	while (*env != NULL)
+	{
+        printf("%s\n", *env);
+        env++;
+	}
+}
 /**
  * tokenize - Tokenizes the input string into an array of arguments.
  * @input: userinput
@@ -80,6 +89,11 @@ int main(void)
 			break;
 		if (strcmp(line, "exit\n") == 0)
 			break;
+		if (strcmp(line, "env\n") == 0)
+		{
+			env_blt();
+			continue;
+		}
 		if (line[line_len - 1] == '\n')
 			line[line_len - 1] = '\0';
 		argc = tokenize(line, args);
