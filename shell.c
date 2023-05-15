@@ -1,12 +1,18 @@
 #include "main.h"
 
+/**
+ * env_blt - print the environment
+ *
+ * Return: void
+ */
 void env_blt(void)
 {
 	char **env = environ;
+
 	while (*env != NULL)
 	{
-        printf("%s\n", *env);
-        env++;
+		printf("%s\n", *env);
+		env++;
 	}
 }
 /**
