@@ -11,7 +11,8 @@ void env_blt(void)
 
 	while (*env != NULL)
 	{
-		printf("%s\n", *env);
+		write(1, *env, _strlen(*env));
+		write(1, "\n", 1);
 		env++;
 	}
 }
@@ -47,7 +48,7 @@ void exe(char *args[], char *env[])
 	char path[128] = "/usr/bin/";
 	pid_t pid;
 
-	strcat(path, args[0]);
+	_strcat(path, args[0]);
 	args[0] = path;
 	pid = fork();
 	if (pid == -1)
@@ -89,13 +90,14 @@ int main(void)
 
 	while (true)
 	{
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
 		if (line_len == -1)
 			break;
-		if (strcmp(line, "exit\n") == 0)
+		if (_strcmp(line, "exit\n") == 0)
 			break;
-		if (strcmp(line, "env\n") == 0)
+		if (_strcmp(line, "env\n") == 0)
 		{
 			env_blt();
 			continue;
