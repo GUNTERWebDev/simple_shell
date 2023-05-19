@@ -1,8 +1,8 @@
 #include "main.h"
 
 /**
- * _strlen - finds length of a string
- * @s: string given
+ * _strlen - finds length of a str
+ * @s: str given
  * Return: length
  */
 int _strlen(char *s)
@@ -16,10 +16,10 @@ int _strlen(char *s)
 }
 
 /**
- * _strcat - Write a function that concatenates two strings.
+ * _strcat - Write a function that concatenates two str.
  *@src: source
  *@dest: destination
- * Return: Returns a pointer to the resulting string dest
+ * Return: Returns a pointer to the resulting str dest
  */
 char *_strcat(char *dest, char *src)
 {
@@ -41,9 +41,9 @@ char *_strcat(char *dest, char *src)
 }
 
 /**
- * _strcmp - compares two strings
- * @s1: first string
- * @s2: second string
+ * _strcmp - compares two strs
+ * @s1: first str
+ * @s2: second str
  * Return: integer less than or equal or greater than 0
  */
 int _strcmp(char *s1, char *s2)
