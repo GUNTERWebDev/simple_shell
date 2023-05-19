@@ -40,14 +40,17 @@ int tokenize(char *input, char *args[])
  * exe - execute command
  * @args: argement
  * @env: envirement
- *
+ * @av: agenment vector
+ * @count: couny every input
  * Return: void
  */
-void exe(char *args[], char *env[])
+void exe(char *args[], char *env[], char **av, int count)
 {
-	char path[128] = "/usr/bin/";
 	pid_t pid;
+	char path[128] = "/usr/bin/";
+	char cmd[128];
 
+	_strcat(cmd, args[0]);
 	_strcat(path, args[0]);
 	args[0] = path;
 	pid = fork();
@@ -60,9 +63,16 @@ void exe(char *args[], char *env[])
 	{
 		if (execve(args[0], args, env) == -1)
 		{
-			perror(args[0]);
-			exit(EXIT_FAILURE);
+			write(STDOUT_FILENO, av[0], _strlen(av[0]));
+			write(STDOUT_FILENO, ": ", 2);
+			write(STDOUT_FILENO, &count, sizeof(count));
+			write(STDOUT_FILENO, " : ", 3);
+			write(STDOUT_FILENO, cmd, _strlen(cmd));
+			write(STDOUT_FILENO, ": not found\n", 12);
 		}
+		else
+			perror(args[0]);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -75,11 +85,12 @@ void exe(char *args[], char *env[])
 
 /**
  * main - main
- *
+ * @ac: argenment count
+ * @av: argement vector
  * Return: success
  */
 
-int main(void)
+int main(__attribute__((unused))int ac, char **av)
 {
 	char *line = NULL;
 	size_t len = 0;
@@ -87,9 +98,11 @@ int main(void)
 	char *env[] = {NULL};
 	ssize_t line_len;
 	int argc;
+	int count = 0;
 
 	while (true)
 	{
+		count++;
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
@@ -106,9 +119,7 @@ int main(void)
 			line[line_len - 1] = '\0';
 		argc = tokenize(line, args);
 		if (argc > 0)
-		{
-			exe(args, env);
-		}
+			exe(args, env, av, count);
 	}
 		free(line);
 		return (0);
