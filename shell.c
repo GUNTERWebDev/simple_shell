@@ -65,8 +65,8 @@ void exe(char *args[], char *env[], char **av, int count)
 		{
 			write(STDOUT_FILENO, av[0], _strlen(av[0]));
 			write(STDOUT_FILENO, ": ", 2);
-			write(STDOUT_FILENO, &count, sizeof(count));
-			write(STDOUT_FILENO, " : ", 3);
+			print_number(count);
+			write(STDOUT_FILENO, " :", 3);
 			write(STDOUT_FILENO, cmd, _strlen(cmd));
 			write(STDOUT_FILENO, ": not found\n", 12);
 		}
