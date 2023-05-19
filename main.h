@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 #define MAX_ARGS 16
 
@@ -15,4 +16,5 @@ int tokenize(char *input, char *args[]);
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
+int _atoi(char *s);
 #endif /* MAIN_H */
