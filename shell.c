@@ -48,9 +48,9 @@ void exe(char *args[], char *env[], char **av, int count)
 {
 	pid_t pid;
 	char path[128] = "/usr/bin/";
-	char cmd[128];
+	char cmd[64];
 
-	_strcat(cmd, args[0]);
+	_strcpy(cmd, args[0]);
 	_strcat(path, args[0]);
 	args[0] = path;
 	pid = fork();
@@ -66,8 +66,8 @@ void exe(char *args[], char *env[], char **av, int count)
 			write(STDOUT_FILENO, av[0], _strlen(av[0]));
 			write(STDOUT_FILENO, ": ", 2);
 			print_number(count);
-			write(STDOUT_FILENO, " :", 3);
-			write(STDOUT_FILENO, cmd, _strlen(cmd));
+			write(STDOUT_FILENO, ": ", 3);
+			_puts(cmd);
 			write(STDOUT_FILENO, ": not found\n", 12);
 		}
 		else

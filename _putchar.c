@@ -1,10 +1,9 @@
 #include  "main.h"
 /**
- * main - print _putchar
- * is written by mbah
- * Return: On sucess 1
- * on error -1
- */
+ * _putchar - print char
+ * @c: character
+ *
+ * Return: write 
 int _putchar(char c)
 {
 	return (write(1, &c, 1));

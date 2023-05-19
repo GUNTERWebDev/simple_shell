@@ -19,4 +19,6 @@ int _strcmp(char *s1, char *s2);
 int _atoi(char *s);
 void print_number(int n);
 int _putchar(char c);
+void _puts(char *str);
+char *_strcpy(char *dest, char *src);
 #endif /* MAIN_H */
