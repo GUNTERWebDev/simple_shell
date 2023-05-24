@@ -1,6 +1,6 @@
 #include "main.h"
 
-
+int child;
 /**
  * env_blt - print the environment
  *
@@ -55,12 +55,12 @@ void exe(char *args[], char *env[], char **av, int count)
 	_strcat(path, args[0]);
 	args[0] = path;
 	pid = fork();
-	if (pid < 0)
+	if (pid == -1)
 	{
 		perror("Fork fail");
 		exit(0);
 	}
-	else if (!pid)
+	else if (pid == 0)
 	{
 		if (execve(args[0], args, env) == -1)
 		{
@@ -81,6 +81,7 @@ void exe(char *args[], char *env[], char **av, int count)
 
 		if (waitpid(pid, &status, 0) == -1)
 			perror("waitpid");
+		child = WEXITSTATUS(status);
 	}
 }
 
@@ -126,5 +127,5 @@ int main(__attribute__((unused))int ac, char **av)
 			exe(args, env, av, count);
 	}
 		free(line);
-		return (0);
+		return (child);
 }
