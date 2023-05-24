@@ -114,8 +114,7 @@ int main(__attribute__((unused))int ac, char **av)
 		if (_strcmp(line, "exit") == 0)
 		{
 			free(line);
-			free(av);
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 		if (_strcmp(line, "env\n") == 0)
 		{
