@@ -42,9 +42,10 @@ int tokenize(char *input, char *args[])
  * @args: argement
  * @env: envirement
  * @av: agenment vector
+ * @count: count
  * Return: int
  */
-int exe(char *args[], char *env[], char **av)
+int exe(char *args[], char *env[], char **av, int count)
 {
 	pid_t pid;
 	char path[128] = "/usr/bin/";
@@ -63,9 +64,16 @@ int exe(char *args[], char *env[], char **av)
 	{
 		if (execve(args[0], args, env) == -1)
 		{
-			perror(av[0]);
-			return (0);
+			write(1, av[0], _strlen(av[0]));
+			write(1, ": ", 2);
+			print_number(count);
+			write(1, ": ", 3);
+			_puts(cmd);
+			write(1, ": not found\n", 12);
 		}
+		else
+		perror(args[0]);
+	exit(EXIT_FAILURE);
 	}
 	else
 		wait(NULL);
@@ -87,9 +95,11 @@ int main(__attribute__((unused))int ac, char **av)
 	char *env[] = {NULL};
 	ssize_t line_len;
 	int argc;
+	int count = 0;
 
 	while (true)
 	{
+		count++;
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
@@ -106,7 +116,7 @@ int main(__attribute__((unused))int ac, char **av)
 			line[line_len - 1] = '\0';
 		argc = tokenize(line, args);
 		if (argc > 0)
-			exe(args, env, av);
+			exe(args, env, av, count);
 	}
 		free(line);
 		return (0);
