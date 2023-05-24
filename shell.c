@@ -113,10 +113,9 @@ int main(__attribute__((unused))int ac, char **av)
 			_putchar('\n');
 			break;
 		}
-		if (_strcmp(line, "exit\n") == 0)
+		if (_strcmp(line, "exit") == 0)
 		{
 			free(line);
-			free(av);
 			exit(0);
 		}
 		if (_strcmp(line, "env\n") == 0)
