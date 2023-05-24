@@ -106,7 +106,11 @@ int main(__attribute__((unused))int ac, char **av)
 		if (line_len == -1)
 			break;
 		if (_strcmp(line, "exit\n") == 0)
-			break;
+		{
+			free(line);
+			free(av);
+			exit(0);
+		}	
 		if (_strcmp(line, "env\n") == 0)
 		{
 			env_blt();
