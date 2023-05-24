@@ -53,8 +53,7 @@ void exe(char *args[], char *env[], char **av)
 	_strcpy(cmd, args[0]);
 	_strcat(path, args[0]);
 	args[0] = path;
-	if (cmd != NULL)
-		pid = fork();
+	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
