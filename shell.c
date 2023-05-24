@@ -104,10 +104,7 @@ int main(__attribute__((unused))int ac, char **av)
 			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
 		if (line_len == -1)
-		{
-			exit(0);
 			break;
-		}
 		if (_strcmp(line, "exit\n") == 0)
 			break;
 		if (_strcmp(line, "env\n") == 0)
