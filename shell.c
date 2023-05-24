@@ -98,6 +98,7 @@ int main(__attribute__((unused))int ac, char **av)
 	char *env[] = {NULL};
 	ssize_t line_len;
 	int argc;
+	int i = 0;
 	int count = 0;
 
 	while (true)
@@ -111,7 +112,7 @@ int main(__attribute__((unused))int ac, char **av)
 			_putchar('\n');
 			break;
 		}
-		if (_strcmp(line, "exit\n") == 0)
+		if (_strcmp(line, "exit") == 0)
 		{
 			free(line);
 			exit(EXIT_SUCCESS);
@@ -126,6 +127,8 @@ int main(__attribute__((unused))int ac, char **av)
 		argc = tokenize(line, args);
 		if (argc > 0)
 			exe(args, env, av, count);
+		while (i < argc)
+			free(args[i++]);
 	}
 		free(line);
 		return (0);
