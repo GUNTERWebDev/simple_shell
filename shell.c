@@ -42,9 +42,9 @@ int tokenize(char *input, char *args[])
  * @args: argement
  * @env: envirement
  * @av: agenment vector
- * Return: void
+ * Return: int
  */
-void exe(char *args[], char *env[], char **av)
+int exe(char *args[], char *env[], char **av)
 {
 	pid_t pid;
 	char path[128] = "/usr/bin/";
@@ -54,26 +54,22 @@ void exe(char *args[], char *env[], char **av)
 	_strcat(path, args[0]);
 	args[0] = path;
 	pid = fork();
-	if (pid == -1)
+	if (pid < 0)
 	{
-		perror("fork");
-		exit(EXIT_FAILURE);
+		perror("Fork fail");
+		return (0);
 	}
-	else if (pid == 0)
+	else if (!pid)
 	{
 		if (execve(args[0], args, env) == -1)
 		{
 			perror(av[0]);
-			exit(EXIT_FAILURE);
+			return (0);
 		}
 	}
 	else
-	{
-		int status;
-
-		if (waitpid(pid, &status, 0) == -1)
-			perror("waitpid");
-	}
+		wait(NULL);
+	return (1);
 }
 
 /**
