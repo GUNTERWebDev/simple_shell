@@ -58,6 +58,7 @@ void exe(char *args[], char *env[], char **av, int count)
 	if (pid < 0)
 	{
 		perror("Fork fail");
+		exit(0);
 	}
 	else if (!pid)
 	{
