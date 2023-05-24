@@ -45,7 +45,7 @@ int tokenize(char *input, char *args[])
  * @count: count
  * Return: int
  */
-int exe(char *args[], char *env[], char **av, int count)
+void exe(char *args[], char *env[], char **av, int count)
 {
 	pid_t pid;
 	char path[128] = "/usr/bin/";
@@ -58,7 +58,6 @@ int exe(char *args[], char *env[], char **av, int count)
 	if (pid < 0)
 	{
 		perror("Fork fail");
-		return (0);
 	}
 	else if (!pid)
 	{
@@ -72,12 +71,11 @@ int exe(char *args[], char *env[], char **av, int count)
 			write(1, ": not found\n", 12);
 		}
 		else
-		perror(args[0]);
-	exit(EXIT_FAILURE);
+			perror(args[0]);
+		exit(EXIT_FAILURE);
 	}
 	else
 		wait(NULL);
-	return (1);
 }
 
 /**
