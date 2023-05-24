@@ -53,7 +53,8 @@ void exe(char *args[], char *env[], char **av)
 	_strcpy(cmd, args[0]);
 	_strcat(path, args[0]);
 	args[0] = path;
-	pid = fork();
+	if (cmd != NULL)
+		pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
@@ -91,7 +92,6 @@ int main(__attribute__((unused))int ac, char **av)
 	char *env[] = {NULL};
 	ssize_t line_len;
 	int argc;
-	int count = 0;
 
 	while (true)
 	{
@@ -111,10 +111,7 @@ int main(__attribute__((unused))int ac, char **av)
 			line[line_len - 1] = '\0';
 		argc = tokenize(line, args);
 		if (argc > 0)
-		{
 			exe(args, env, av);
-			count++;
-		}
 	}
 		free(line);
 		return (0);
