@@ -72,7 +72,7 @@ void exe(char *args[], char *env[], char **av, int count)
 		}
 		else
 			perror(args[0]);
-		exit(EXIT_FAILURE);
+		exit(0);
 	}
 	else
 		wait(NULL);
