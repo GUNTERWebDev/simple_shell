@@ -9,7 +9,7 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-#define MAX_ARGS 16
+#define MAX_ARGS 64
 
 extern char **environ;
 int tokenize(char *input, char *args[]);
