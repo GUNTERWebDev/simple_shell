@@ -111,7 +111,7 @@ int main(__attribute__((unused))int ac, char **av)
 			_putchar('\n');
 			break;
 		}
-		if (_strcmp(line, "exit") == 0)
+		if (_strcmp(line, "exit\n") == 0)
 		{
 			free(line);
 			exit(EXIT_SUCCESS);
