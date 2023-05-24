@@ -110,7 +110,8 @@ int main(__attribute__((unused))int ac, char **av)
 		if (line_len == -1)
 		{
 			_putchar('\n');
-			break;
+			free(line);
+			exit(0);
 		}
 		if (_strcmp(line, "exit\n") == 0)
 		{
