@@ -94,7 +94,7 @@ int main(__attribute__((unused))int ac, char **av)
 			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
 		if (line_len == -1)
-			exit(EXIT_FAILURE);
+			exit(0);
 		
 		if (_strcmp(line, "exit\n") == 0)
 			break;
