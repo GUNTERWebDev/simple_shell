@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 /**
  * env_blt - print the environment
  *
@@ -31,7 +32,7 @@ int tokenize(char *input, char *args[])
 	while (token != NULL && i < MAX_ARGS)
 	{
 		args[i++] = token;
-		token = strtok(NULL, " ");
+		token = strtok(NULL, " \n\t\r");
 	}
 	args[i] = NULL;
 	return (i);
@@ -44,7 +45,7 @@ int tokenize(char *input, char *args[])
  * @count: couny every input
  * Return: void
  */
-void exe(char *args[], char *env[], char **av, int count)
+void exe(char *args[], char *env[], char **av)
 {
 	pid_t pid;
 	char path[128] = "/usr/bin/";
@@ -63,16 +64,9 @@ void exe(char *args[], char *env[], char **av, int count)
 	{
 		if (execve(args[0], args, env) == -1)
 		{
-			write(STDOUT_FILENO, av[0], _strlen(av[0]));
-			write(STDOUT_FILENO, ": ", 2);
-			print_number(count);
-			write(STDOUT_FILENO, ": ", 3);
-			_puts(cmd);
-			write(STDOUT_FILENO, ": not found\n", 12);
+			perror(av[0]);
+			exit(EXIT_FAILURE);
 		}
-		else
-			perror(args[0]);
-		exit(EXIT_FAILURE);
 	}
 	else
 	{
@@ -102,7 +96,6 @@ int main(__attribute__((unused))int ac, char **av)
 
 	while (true)
 	{
-		count++;
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
@@ -119,7 +112,10 @@ int main(__attribute__((unused))int ac, char **av)
 			line[line_len - 1] = '\0';
 		argc = tokenize(line, args);
 		if (argc > 0)
-			exe(args, env, av, count);
+		{
+			exe(args, env, av);
+			count++;
+		}
 	}
 		free(line);
 		return (0);
