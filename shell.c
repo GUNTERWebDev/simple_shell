@@ -79,7 +79,7 @@ void exe(char *args[], char *env[], char **av, int count)
 	{
 		int status;
 
-		if (waitpid(pid, &status,0) == -1)
+		if (waitpid(pid, &status, 0) == -1)
 			perror("waitpid");
 	}
 }
