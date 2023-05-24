@@ -42,7 +42,6 @@ int tokenize(char *input, char *args[])
  * @args: argement
  * @env: envirement
  * @av: agenment vector
- * @count: couny every input
  * Return: void
  */
 void exe(char *args[], char *env[], char **av)
