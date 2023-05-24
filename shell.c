@@ -76,7 +76,12 @@ void exe(char *args[], char *env[], char **av, int count)
 		exit(0);
 	}
 	else
-		wait(NULL);
+	{
+		int status;
+
+		if (waitpid(pid, &status,0) == -1)
+			perror("waitpid");
+	}
 }
 
 /**
@@ -108,7 +113,10 @@ int main(__attribute__((unused))int ac, char **av)
 			break;
 		}
 		if (_strcmp(line, "exit\n") == 0)
-			break;
+		{
+			free(line);
+			exit(0);
+		}
 		if (_strcmp(line, "env\n") == 0)
 		{
 			env_blt();
