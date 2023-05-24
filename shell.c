@@ -129,5 +129,5 @@ int main(__attribute__((unused))int ac, char **av)
 			exe(args, env, av, count);
 	}
 		free(line);
-		return (child);
+		return (0);
 }
