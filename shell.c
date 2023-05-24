@@ -57,7 +57,7 @@ void exe(char *args[], char *env[], char **av, int count)
 	if (pid == -1)
 	{
 		perror("Fork fail");
-		exit(1);
+		exit(0);
 	}
 	else if (pid == 0)
 	{
@@ -66,7 +66,7 @@ void exe(char *args[], char *env[], char **av, int count)
 			write(1, av[0], _strlen(av[0]));
 			write(1, ": ", 2);
 			print_number(count);
-			write(1, ": ", 3);
+			write(1, ": ", 2);
 			_puts(cmd);
 			write(1, ": not found\n", 12);
 		}
@@ -80,7 +80,6 @@ void exe(char *args[], char *env[], char **av, int count)
 
 		if (waitpid(pid, &status, 0) == -1)
 			perror("waitpid");
-		exit(1);
 	}
 }
 
@@ -115,6 +114,7 @@ int main(__attribute__((unused))int ac, char **av)
 		if (_strcmp(line, "exit") == 0)
 		{
 			free(line);
+			free(av);
 			exit(0);
 		}
 		if (_strcmp(line, "env\n") == 0)
