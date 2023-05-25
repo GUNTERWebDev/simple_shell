@@ -26,7 +26,7 @@ void env_blt(void)
 int tokenize(char *input, char *args[])
 {
 	int i = 0;
-	char *token = strtok(input, " ");
+	char *token = strtok(input, " \n\t\r");
 
 	while (token != NULL && i < MAX_ARGS)
 	{
@@ -110,8 +110,11 @@ int main(__attribute__((unused))int ac, char **av)
 		if (line_len == -1)
 		{
 			if (isatty(STDIN_FILENO))
+			{
 				write(STDOUT_FILENO, "\n", 1);
-			break;
+				free(line);
+			}
+			exit(0);
 		}
 		if (_strcmp(line, "exit") == 0)
 		{
