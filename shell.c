@@ -47,12 +47,11 @@ int tokenize(char *input, char *args[])
 void exe(char *args[], char *env[], char **av, int count)
 {
 	pid_t pid;
-	char path[128] = "/usr/bin/";
 	char cmd[64];
+	char *get = NULL;
 
 	_strcpy(cmd, args[0]);
-	_strcat(path, args[0]);
-	args[0] = path;
+	get = get_cmd(cmd);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -61,7 +60,7 @@ void exe(char *args[], char *env[], char **av, int count)
 	}
 	else if (pid == 0)
 	{
-		if (execve(args[0], args, env) == -1)
+		if (execve(get, args, env) == -1)
 		{
 			write(1, av[0], _strlen(av[0]));
 			write(1, ": ", 2);

@@ -8,8 +8,10 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 #define MAX_ARGS 64
+#define BUFFER_SIZE 64
 
 extern char **environ;
 int tokenize(char *input, char *args[]);
@@ -21,4 +23,6 @@ void print_number(int n);
 int _putchar(char c);
 void _puts(char *str);
 char *_strcpy(char *dest, char *src);
+char *get_cmd(char *line);
+char *_strdup(char *str);
 #endif /* MAIN_H */
