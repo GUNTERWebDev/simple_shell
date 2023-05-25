@@ -108,9 +108,10 @@ int main(__attribute__((unused))int ac, char **av)
 		if (line_len == -1)
 		{
 			write(1, "Exiting shell....\n", 18);
+			free(line);
 			return (-1);
 		}
-		if (_strcmp(line, "exit") == 0)
+		if (_strcmp(line, "exit\n") == 0)
 		{
 			free(line);
 			exit(EXIT_SUCCESS);
@@ -126,6 +127,6 @@ int main(__attribute__((unused))int ac, char **av)
 		if (argc > 0)
 			exe(args, env, av, count);
 	}
-		free(line);
-		return (0);
+	free(line);
+	return (0);
 }
