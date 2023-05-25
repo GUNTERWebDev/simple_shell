@@ -109,7 +109,7 @@ int main(__attribute__((unused))int ac, char **av)
 		{
 			write(1, "Exiting shell....\n", 18);
 			free(line);
-			return (-1);
+			exit(EXIT_FAILURE);
 		}
 		if (_strcmp(line, "exit\n") == 0)
 		{
