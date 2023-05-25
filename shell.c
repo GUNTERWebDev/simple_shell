@@ -47,7 +47,7 @@ int tokenize(char *input, char *args[])
 void exe(char *args[], char *env[], char **av, int count)
 {
 	pid_t pid;
-	char path[128] = "user/bin/";
+	char path[128] = "/usr/bin/";
 	char cmd[64];
 
 	_strcpy(cmd, args[0]);
@@ -107,10 +107,7 @@ int main(__attribute__((unused))int ac, char **av)
 			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
 		if (line_len == -1)
-		{
-			free(line);
 			break;
-		}
 		if (_strcmp(line, "exit") == 0)
 		{
 			free(line);
