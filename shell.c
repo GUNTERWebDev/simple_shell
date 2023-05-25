@@ -47,7 +47,7 @@ int tokenize(char *input, char *args[])
 void exe(char *args[], char *env[], char **av, int count)
 {
 	pid_t pid;
-	char path[128] = "/usr/bin/";
+	char path[128] = "bin/";
 	char cmd[64];
 
 	_strcpy(cmd, args[0]);
@@ -98,7 +98,6 @@ int main(__attribute__((unused))int ac, char **av)
 	char *env[] = {NULL};
 	ssize_t line_len;
 	int argc;
-	int i = 0;
 	int count = 0;
 
 	while (true)
@@ -127,8 +126,6 @@ int main(__attribute__((unused))int ac, char **av)
 		argc = tokenize(line, args);
 		if (argc > 0)
 			exe(args, env, av, count);
-		while (i < argc)
-			free(args[i++]);
 	}
 		free(line);
 		return (0);
