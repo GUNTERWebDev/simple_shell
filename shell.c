@@ -109,6 +109,7 @@ int main(__attribute__((unused))int ac, char **av)
 		line_len = getline(&line, &len, stdin);
 		if (line_len == -1)
 		{
+			write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
 		if (_strcmp(line, "exit") == 0)
