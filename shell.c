@@ -114,7 +114,7 @@ int main(__attribute__((unused))int ac, char **av)
 				write(STDOUT_FILENO, "\n", 1);
 				free(line);
 			}
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 		if (_strcmp(line, "exit") == 0)
 		{
