@@ -47,7 +47,7 @@ int tokenize(char *input, char *args[])
 void exe(char *args[], char *env[], char **av, int count)
 {
 	pid_t pid;
-	char path[128] = "bin/";
+	char path[128] = "user/bin/";
 	char cmd[64];
 
 	_strcpy(cmd, args[0]);
