@@ -110,8 +110,10 @@ int main(__attribute__((unused))int ac, char **av)
 		if (line_len == -1)
 		{
 			if (isatty(STDIN_FILENO))
+			{
 				write(STDOUT_FILENO, "\n", 1);
-			break;
+				break;
+			}
 		}
 		if (_strcmp(line, "exit") == 0)
 		{
