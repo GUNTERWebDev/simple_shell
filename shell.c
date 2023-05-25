@@ -106,7 +106,11 @@ int main(__attribute__((unused))int ac, char **av)
 			write(STDOUT_FILENO, "$ ", 2);
 		line_len = getline(&line, &len, stdin);
 		if (line_len == -1)
-			break;
+		{
+			write(1, "Exiting shell....\n", 18);
+			free(line);
+			return (-1);
+		}
 		if (_strcmp(line, "exit") == 0)
 		{
 			free(line);
